@@ -1,7 +1,7 @@
 <?php if (!defined('APPLICATION')) exit();
 
 $TermsOfServiceUrl = Gdn::Config('Garden.TermsOfService', '#');
-$TermsOfServiceText = sprintf(Gdn::Translate('I agree to the <a id="TermsOfService" class="Popup" target="terms" href="{0}">terms of service</a>'), Url($TermsOfServiceUrl));
+$TermsOfServiceText = sprintf(Gdn::Translate('I agree to the <a id="TermsOfService" class="Popup" target="terms" href="%s">terms of service</a>'), Url($TermsOfServiceUrl));
 
 // Make sure to force this form to post to the correct place in case the view is
 // rendered within another view (ie. /garden/entry/index/):

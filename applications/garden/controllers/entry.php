@@ -383,7 +383,7 @@ class EntryController extends GardenController {
             $User = $this->UserModel->PasswordReset($UserID, $Password);
             $Authenticator = Gdn::Authenticator();
             $Authenticator->Authenticate(array('Name' => $User->Name, 'Password' => $Password, 'RememberMe' => FALSE));
-            $this->StatusMessage = Gdn::Translate('Password saved. Signing you in now...');
+            $this->StatusMessage = Gdn::Translate('Password saved', 'Password saved. Signing you in now...');
             $this->RedirectUrl = Url('/');
          }
       }

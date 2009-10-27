@@ -7,7 +7,7 @@ echo $this->Form->Open(array('Action' => Url('/entry/handshake'), 'id' => 'Form_
 <h1><?php echo Gdn::Translate("Handshake") ?></h1>
 <?php echo $this->Form->Errors(); ?>
 <div class="">
-	<p><?php echo Gdn::Translate('There is another user in the system that has the same Username and/or Email as you.
+	<p><?php echo Gdn::Translate('User already exists.', 'There is another user in the system that has the same Username and/or Email as you.
 										  You\'ll have to select a new one to access the system.'); ?></p>
 	<ul>
 	<?php

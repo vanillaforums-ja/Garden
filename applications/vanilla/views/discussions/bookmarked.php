@@ -12,7 +12,7 @@ if ($this->DiscussionData->NumRows() > 0) {
 <?php
 } else {
 ?>
-<div class="Info EmptyInfo"><?php echo Gdn::Translate('You do not have any bookmarks.'); ?></div>
+<div class="Info EmptyInfo"><?php echo sprintf(Gdn::Translate('You do not have any %s.'), Gdn::Translate('bookmarks')); ?></div>
 <?php
 }
 echo $this->Pager->ToString('more');

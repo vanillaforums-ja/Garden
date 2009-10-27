@@ -195,9 +195,9 @@ class SettingsController extends GardenController {
       $this->AddDefinition('CountUsers', $CountUsers);
       $this->BuzzData[Translate('Users')] = number_format($CountUsers);
       // Get the number of new users in the last day
-      $this->BuzzData[Translate('New users in the last day')] = number_format($UserModel->GetCountWhere(array('DateInserted >=' => Format::ToDateTime(strtotime('-1 day')))));
+      $this->BuzzData[sprintf(Translate('New users in the last %s'), Translat('day'))] = number_format($UserModel->GetCountWhere(array('DateInserted >=' => Format::ToDateTime(strtotime('-1 day')))));
       // Get the number of new users in the last week
-      $this->BuzzData[Translate('New users in the last week')] = number_format($UserModel->GetCountWhere(array('DateInserted >=' => Format::ToDateTime(strtotime('-1 week')))));
+      $this->BuzzData[sprintf(Translate('New users in the last %s'), Translat('week'))] = number_format($UserModel->GetCountWhere(array('DateInserted >=' => Format::ToDateTime(strtotime('-1 week')))));
       
       // Get recently active users
       $this->ActiveUserData = $UserModel->GetActiveUsers(5);
@@ -388,9 +388,9 @@ class SettingsController extends GardenController {
       
       // Options for when invitations should expire.
       $this->InviteExpirationOptions = array(
-        '-1 week' => Gdn::Translate('1 week after being sent'),
-        '-2 weeks' => Gdn::Translate('2 weeks after being sent'),
-        '-1 month' => Gdn::Translate('1 month after being sent'),
+        '-1 week' => sprintf(Gdn::Translate('%s %s after being sent'), '1', Gdn::Translate('week')),
+        '-2 weeks' => sprintf(Gdn::Translate('%s %s after being sent'), '2', Gdn::Translate('weeks')),
+        '-1 month' => sprintf(Gdn::Translate('%s %s after being sent'), '1', Gdn::Translate('month')),
         'FALSE' => Gdn::Translate('never')
       );
       

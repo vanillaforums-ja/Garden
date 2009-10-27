@@ -37,7 +37,7 @@ echo $this->Form->Errors();
       ?>
    </li>
    <li>
-      <div class="Info"><?php echo Gdn::Translate('Garden will attempt to use the local mail server to send email by default. If you want to use a separate SMTP mail server, you can configure it below.'); ?></div>
+      <div class="Info"><?php echo Gdn::Translate('Configute SMTP Server', 'Garden will attempt to use the local mail server to send email by default. If you want to use a separate SMTP mail server, you can configure it below.'); ?></div>
    </li>
    <li>
       <?php

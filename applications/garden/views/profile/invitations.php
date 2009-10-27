@@ -7,7 +7,7 @@ if ($this->InvitationCount > 0) {
 }
 if ($this->InvitationCount != 0) {
 ?>
-   <li><strong><?php echo Gdn::Translate('Enter the email address of the person you would like to invite:'); ?></strong></li>
+   <li><strong><?php echo Gdn::Translate('Invite Email:', 'Enter the email address of the person you would like to invite:'); ?></strong></li>
    <li>
    <?php
       echo $this->Form->Label('Email', 'Email');

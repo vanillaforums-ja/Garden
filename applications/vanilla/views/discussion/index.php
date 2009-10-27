@@ -49,7 +49,7 @@ if ($this->Discussion->Closed == '1') {
    } else {
       ?>
       <div class="CommentOption">
-         <?php echo Gdn::Translate('Want to take part in this discussion? Click one of these:'); ?>
+         <?php echo Gdn::Translate('Sign in or register.', 'Want to take part in this discussion? Click one of these:'); ?>
          <?php echo Anchor('Sign In', Gdn::Authenticator()->SignInUrl($this->SelfUrl), 'Button'); ?> 
          <?php
             $Url = Gdn::Authenticator()->RegisterUrl($this->SelfUrl);

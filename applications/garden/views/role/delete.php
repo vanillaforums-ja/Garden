@@ -13,7 +13,7 @@ echo $this->Form->Errors();
             echo '<p>'.sprintf(Translate("If you delete this role and don't specify a replacement role, %s user(s) will be orphaned."), $this->OrphanedUsers).'</p>';
          }
          ?>
-      <p><?php echo Gdn::Translate('Choose a role that orphaned users will be assigned to:'); ?></p>
+      <p><?php echo Gdn::Translate('Replacement Role:', 'Choose a role that orphaned users will be assigned to:'); ?></p>
    </li>
    <li>
       <?php

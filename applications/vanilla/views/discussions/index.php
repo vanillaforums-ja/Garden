@@ -28,6 +28,6 @@ else
 } else if (!$HasAnnouncements) {
    ?>
    <h1><?php echo Gdn::Translate('Discussions'); ?></h1>
-   <div class="Info EmptyInfo"><?php echo Gdn::Translate('No discussions up in here...'); ?></div>
+   <div class="Info EmptyInfo"><?php echo sprintf(Gdn::Translate('No %s', 'No %s up in here...'), Gdn::Translate('discussions')); ?></div>
 <?php
 }

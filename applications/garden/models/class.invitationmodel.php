@@ -99,7 +99,7 @@ class Gdn_InvitationModel extends Gdn_Model {
          try {
             $this->Send($InvitationID);
          } catch (Exception $ex) {
-            $this->Validation->AddValidationResult('Email', sprintf(Gdn::Translate('Although the invitation was created successfully, the email failed to send. The server reported the following error: %s'), strip_tags($ex->getMessage())));
+            $this->Validation->AddValidationResult('Email', sprintf(Gdn::Translate('Email Error: %s', 'Although the invitation was created successfully, the email failed to send. The server reported the following error: %s'), strip_tags($ex->getMessage())));
             return FALSE;
          }
          return TRUE;

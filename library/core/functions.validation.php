@@ -221,7 +221,7 @@ if (!function_exists('ValidatePermissionFormat')) {
       $PermissionCount = count($Permission);
       for ($i = 0; $i < $PermissionCount; ++$i) {
          if (count(explode('.', $Permission[$i])) < 3)
-            return sprintf(Gdn::Translate('The following permission did not meet the permission naming requirements and could not be added: %s'), $Permission[$i]);
+            return sprintf(Gdn::Translate('Permission name invalid (%s).', 'The following permission did not meet the permission naming requirements and could not be added: %s'), $Permission[$i]);
 
       }
       return TRUE;

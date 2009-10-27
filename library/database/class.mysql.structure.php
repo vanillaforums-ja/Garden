@@ -203,22 +203,34 @@ class Gdn_MySQLStructure extends Gdn_DatabaseStructure {
       $NewColumns = array_diff(array_keys($this->_Columns), $ExistingColumns);
       foreach ($NewColumns as $Column) {
          if (!$this->Database->Query('alter table `'.$this->_DatabasePrefix.$this->_TableName.'` add '.$this->_DefineColumn(ArrayValue($Column, $this->_Columns))))
-            throw new Exception(Gdn::Translate('Failed to add the `'.$Column.'` column to the `'.$this->_DatabasePrefix.$this->_TableName.'` table.'));
+            throw new Exception(sprintf(Gdn::Translate('Failed to add the `%s` %s to the `%s` table.'), $Column, Gdn::Translate('column'), $this->_DatabasePrefix.$this->_TableName));
 
          // Add keys if necessary
          $Col = ArrayValue($Column, $this->_Columns);
          if ($Col->KeyType == 'primary') {
             if (!$this->Database->Query('alter table `'.$this->_DatabasePrefix.$this->_TableName.'` add primary key using btree(`'.$Column.'`)'))
-               throw new Exception(Gdn::Translate('Failed to add the `'.$Column.'` primary key to the `'.$this->_DatabasePrefix.$this->_TableName.'` table.'));
+               throw new Exception(sprintf(Gdn::Translate('Failed to add the `%s` %s to the `%s` table.'),
+                                           $Column,
+                                           Gdn::Translate('primary key'),
+                                           $this->_DatabasePrefix.$this->_TableName));
          } else if ($Col->KeyType == 'key') {
             if (!$this->Database->Query('alter table `'.$this->_DatabasePrefix.$this->_TableName.'` add index `'.Format::AlphaNumeric('`FK_'.$this->_TableName.'_'.$Column).'` (`'.$Column.'`)'))
-               throw new Exception(Gdn::Translate('Failed to add the `'.$Column.'` key to the `'.$this->_DatabasePrefix.$this->_TableName.'` table.'));
+               throw new Exception(sprintf(Gdn::Translate('Failed to add the `%s` %s to the `%s` table.'),
+                                           $Column,
+                                           Gdn::Translate('key'),
+                                           $this->_DatabasePrefix.$this->_TableName));
          } else if ($Col->KeyType == 'index') {
             if (!$this->Database->Query('alter table `'.$this->_DatabasePrefix.$this->_TableName.'` add index `'.Format::AlphaNumeric('`IX_'.$this->_TableName.'_'.$Column).'` (`'.$Column.'`)'))
-               throw new Exception(Gdn::Translate('Failed to add the `'.$Column.'` index to the `'.$this->_DatabasePrefix.$this->_TableName.'` table.'));
+               throw new Exception(sprintf(Gdn::Translate('Failed to add the `%s` %s to the `%s` table.').
+                                           $Column,
+                                           Gdn::Translate('index'),
+                                           $this->_DatabasePrefix.$this->_TableName));
          } else if ($Col->KeyType == 'unique') {
             if (!$this->Database->Query('alter table `'.$this->_DatabasePrefix.$this->_TableName.'` add unique index `'.Format::AlphaNumeric('`UX_'.$this->_TableName.'_'.$Column).'` (`'.$Column.'`)'))
-               throw new Exception(Gdn::Translate('Failed to add the `'.$Column.'` unique index to the `'.$this->_DatabasePrefix.$this->_TableName.'` table.'));
+               throw new Exception(sprintf(Gdn::Translate('Failed to add the `%s` %s to the `%s` table.'),
+                                           $Column,
+                                           Gdn::Translate('unique index'),
+                                           $this->_DatabasePrefix.$this->_TableName));
          }
       }
 

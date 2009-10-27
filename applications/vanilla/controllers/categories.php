@@ -16,7 +16,7 @@ class CategoriesController extends VanillaController {
       if ($this->Head) {
          $this->Head->AddScript('/applications/vanilla/js/categories.js');
          $this->Head->AddScript('/js/library/jquery.gardencheckboxgrid.js');
-         $this->Head->Title(Translate('Add Category'));
+         $this->Head->Title(sprintf(Translate('Add %s'), Translate('Category')));
       }
       $this->AddCssFile('garden.css');
       $this->AddSideMenu('vanilla/categories/manage');
@@ -29,7 +29,7 @@ class CategoriesController extends VanillaController {
       } else {
          $CategoryID = $this->Form->Save();
          if ($CategoryID) {               
-            $this->StatusMessage = Gdn::Translate('The category was created successfully.');
+            $this->StatusMessage = sprintf(Gdn::Translate('The %s was created successfully.', Gdn::Translate('category')));
             $this->RedirectUrl = Url('vanilla/categories/manage');
          }
       }
@@ -45,7 +45,7 @@ class CategoriesController extends VanillaController {
       $this->Permission('Vanilla.Categories.Manage');
       if ($this->Head) {
          $this->Head->AddScript('/applications/vanilla/js/categories.js');
-         $this->Head->Title(Translate('Delete Category'));
+         $this->Head->Title(sprintf(Translate('Delete %s', Translate('Category'))));
       }
 
       $this->AddCssFile('garden.css');
@@ -108,7 +108,7 @@ class CategoriesController extends VanillaController {
                }
                if ($this->Form->ErrorCount() == 0) {
                   $this->RedirectUrl = Url('vanilla/categories/manage');
-                  $this->StatusMessage = Gdn::Translate('Deleting category...');
+                  $this->StatusMessage = sprintf(Gdn::Translate('Deleting %s...', Gdn::Translate('category')));
                }
             }
          }
@@ -124,7 +124,7 @@ class CategoriesController extends VanillaController {
       $this->Category = $this->CategoryModel->GetID($CategoryID);
       if ($this->Head) {
          $this->Head->AddScript('/js/library/jquery.gardencheckboxgrid.js');
-         $this->Head->Title(Translate('Edit Category'));
+         $this->Head->Title(sprintf(Translate('Edit %s'), Translate('Category')));
       }
          
       $this->AddCssFile('garden.css');
@@ -141,7 +141,7 @@ class CategoriesController extends VanillaController {
       } else {
          if ($this->Form->Save()) {
             // Report success
-            $this->StatusMessage = Gdn::Translate('The category was saved successfully.');
+            $this->StatusMessage = sprintf(Gdn::Translate('The %s was saved successfully.'), Gdn::Translate('category'));
             $this->RedirectUrl = Url('vanilla/categories/manage');
          }
       }
@@ -254,7 +254,7 @@ class CategoriesController extends VanillaController {
       if ($this->Head) {
          $this->Head->AddScript('/applications/vanilla/js/discussions.js');
          $this->Head->AddScript('/applications/vanilla/js/options.js');
-         $this->Head->Title(Translate('All Categories'));
+         $this->Head->Title(sprintf(Translate('All %s'), Translate('Categories')));
       }
          
       $this->DiscussionsPerCategory = Gdn::Config('Vanilla.Discussions.PerCategory', 5);

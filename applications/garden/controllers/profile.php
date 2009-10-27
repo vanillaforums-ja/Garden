@@ -113,7 +113,7 @@ class ProfileController extends GardenController {
          $View = $CurrentTab;
          
       if ($this->_DeliveryType == DELIVERY_TYPE_ALL && $this->SyndicationMethod == SYNDICATION_NONE) {
-         $this->AddDefinition('DefaultAbout', Gdn::Translate('Write something about yourself...'));
+         $this->AddDefinition('DefaultAbout', Gdn::Translate('Your Description', 'Write something about yourself...'));
          $this->View = 'index';
          $this->_TabView = $View;
          $this->_TabController = $Controller;

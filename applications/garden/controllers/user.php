@@ -108,7 +108,7 @@ class UserController extends GardenController {
          if ($NewUserID !== FALSE) {
             $Password = $this->Form->GetValue('Password', '');
             $UserModel->SendWelcomeEmail($NewUserID, $Password);
-            $this->StatusMessage = Gdn::Translate('The user has been created successfully');
+            $this->StatusMessage = sprintf(Gdn::Translate('The %s has been created successfully'), Gdn::Translate('user'));
             $this->RedirectUrl = Url('garden/user');
          }
          $this->UserRoleData = $this->Form->GetFormValue('RoleID');

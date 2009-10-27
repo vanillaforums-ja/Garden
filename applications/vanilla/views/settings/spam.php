@@ -9,7 +9,7 @@ echo $this->Form->Open();
 echo $this->Form->Errors();
 ?>
 <h1><?php echo Gdn::Translate('Manage Spam'); ?></h1>
-<div class="Info"><?php echo Gdn::Translate('Prevent spam on your forum by limiting the number of discussions &amp; comments that users can post within a given period of time.'); ?></div>
+<div class="Info"><?php echo Gdn::Translate('Spam Prevention', 'Prevent spam on your forum by limiting the number of discussions &amp; comments that users can post within a given period of time.'); ?></div>
 <table class="AltColumns">
    <thead>
       <tr>

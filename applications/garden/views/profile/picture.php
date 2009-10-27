@@ -10,5 +10,5 @@ echo $this->Form->Errors();
       <?php echo $this->Form->Input('Picture', 'file'); ?>
    </li>
 </ul>
-<small><?php echo Gdn::Translate('By uploading a file you certify that you have the right to distribute this picture and that it does not violate the Terms of Service.'); ?></small>
+<small><?php echo Gdn::Translate('Upload certification.', 'By uploading a file you certify that you have the right to distribute this picture and that it does not violate the Terms of Service.'); ?></small>
 <?php echo $this->Form->Close('Upload');

@@ -41,11 +41,11 @@ echo $this->Form->Errors();
       </table>
    </li>
    <li id="NewUserRoles">
-      <div class="Info"><?php echo Gdn::Translate('Check all roles that should be applied to new/approved users:'); ?></div>
+      <div class="Info"><?php echo Gdn::Translate('User\'s Roles', 'Check all roles that should be applied to new/approved users:'); ?></div>
       <?php echo $this->Form->CheckBoxList('Garden.Registration.DefaultRoles', $this->RoleData, $this->ExistingRoleData, array('TextField' => 'Name', 'ValueField' => 'RoleID')); ?>
    </li>
    <li id="CaptchaSettings">
-      <div class="Info"><?php echo Gdn::Translate('In order to use Captcha on your registration forms, you will need an account at <a href="http://recaptcha.net/">recaptcha.net</a>. Signing up is FREE and easy. Once you have signed up, come back here and enter the following settings:'); ?></div>
+      <div class="Info"><?php echo Gdn::Translate('Recaptcha Settings:', 'In order to use Captcha on your registration forms, you will need an account at <a href="http://recaptcha.net/">recaptcha.net</a>. Signing up is FREE and easy. Once you have signed up, come back here and enter the following settings:'); ?></div>
       <table class="Label AltColumns">
          <thead>
             <tr>
@@ -71,7 +71,7 @@ echo $this->Form->Errors();
       ?>
    </li>
    <li id="InvitationSettings">
-      <div class="Info"><?php echo Gdn::Translate('Choose who can send out invitations to new members:'); ?></div>
+      <div class="Info"><?php echo Gdn::Translate('Invitation Roles:', 'Choose who can send out invitations to new members:'); ?></div>
       <table class="Label AltColumns">
          <thead>
             <tr>

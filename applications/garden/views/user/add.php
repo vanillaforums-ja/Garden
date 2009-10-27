@@ -42,7 +42,7 @@ echo $this->Form->Errors();
       ?>
    </li>
    <li>
-      <strong><?php echo Gdn::Translate('Check all roles that apply to this user:'); ?></strong>
+      <strong><?php echo Gdn::Translate('User\'s Roles:', 'Check all roles that apply to this user:'); ?></strong>
       <?php echo $this->Form->CheckBoxList("RoleID", $this->RoleData, $this->UserRoleData, array('TextField' => 'Name', 'ValueField' => 'RoleID')); ?>
    </li>
 </ul>
