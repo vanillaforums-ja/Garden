@@ -412,22 +412,6 @@ class DownloadModel {
       return FALSE;
    }
    
-   public function GetAddonPath($Addon, $Version = NULL) {
-
-      if (is_null($Version))
-         $Version = 'latest';
-      
-      $VersionInfo = $this->VersionInfo($Addon, $Version);
-      if ($VersionInfo === FALSE) 
-         throw new Exception(sprintf(T("Could not find version '%s' of %s"), $Version, $Addon));
-      
-      print_r($VersionInfo);
-      die();
-      $DownloadPath = CombinePaths(array($this->DownloadDir, $Addon, basename(GetValue('File',$VersionInfo))));
-      $DownloadAddonName = implode('-',array($Addon,GetValue('Version',$VersionInfo)));
-
-   }
-   
    public function RemoteAddonInfo($Addon) {
       if (!array_key_exists($Addon, $this->RemoteInfo)) {
          $APICall = GetValue('query', $this->RPC);
@@ -468,7 +452,7 @@ class DownloadModel {
       return DownloadModel::STATE_STABLE;
    }
    
-   public function VersionInfo($Addon, $Version = NULL, $MinimumState = NULL) {
+   public function VersionInfo($Addon, $Version = NULL, $MinimumState) {
    
       // Normalize "latest" to NULL
       if ($Version == 'latest')
@@ -492,7 +476,7 @@ class DownloadModel {
    }
    
    public function LatestVersion($Addon, $MinimumState = NULL) {
-      $LatestVersion = $this->VersionInfo($Addon, NULL, $MinimumState);
+      $LatestVersion = $this->VersionInfo($Addon);
       return GetValue('Version', $LatestVersion, FALSE);
    }
    
