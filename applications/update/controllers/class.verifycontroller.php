@@ -49,6 +49,7 @@ class VerifyController extends UpdateController {
                // Unknown task length. Deploy spinner
                $DownloadModel = new DownloadModel();
                $AddonFile = $DownloadModel->GetAddonArchive('vanilla-core');
+               $TargetPath = $DownloadModel->GetAddonPath('vanilla-core');
                
                if ($AddonFile == FALSE) {
                   $this->Fail('Could not get the downloaded archive path. Did the download fail?');
@@ -64,13 +65,12 @@ class VerifyController extends UpdateController {
                
                $this->Update->Progress('verify', 'extract', 0, TRUE);
                $LastProgress = 0; $NumFiles = $ZipModel->numFiles;
-               echo "Files: {$NumFiles}\n";
                for ($i = 0; $i < $NumFiles; $i++) {
                   $FileName = $ZipModel->getNameIndex($i);
                   //$ZipModel->extractTo(,$FileName);
+                  
                   $Progress = round((($i+1) / $NumFiles) * 100,2);
                   if (floor($Progress) > floor($LastProgress)) {
-                     echo "({$Progress}%) @ {$i} / {$NumFiles}\n";
                      $this->Update->Progress('verify','extract',$Progress,TRUE);
                      $LastProgress = $Progress;
                   }
