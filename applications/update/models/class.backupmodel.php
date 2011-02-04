@@ -247,8 +247,9 @@ class BackupModel {
       if (is_null($IgnoredFiles)) $IgnoredFiles = $this->Ignore;
       if (!is_array($IgnoredFiles)) $IgnoredFiles = array($IgnoredFiles);
       if (in_array($Filename, $IgnoredFiles)) return TRUE;
+      $Compare = str_replace(PATH_ROOT, '', CombinePaths(array($Filepath, $Filename)));
       foreach ($IgnoredFiles as $Ignore)
-         if (fnmatch($Ignore, $Filename)) return TRUE;
+         if (fnmatch($Ignore, $Compare)) return TRUE;
          
       return FALSE;
    }

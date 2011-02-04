@@ -23,16 +23,26 @@ class DownloadController extends UpdateController {
       $this->Render();
    }
    
-   public function Get() {
+   public function Get($Revision = NULL) {
+      $Addon = C('Update.Remote.Addon');
       $RenderController = 'download';
       
       $RequestType = $this->RequestType();
       switch ($RequestType) {
          case 'ui':
             $this->UpdaterTitle = T('Downloading updates...');
-            $this->UpdaterTasks = array(
-               'update/download/get'   => $this->UpdaterTitle
-            );
+            
+            // First, check if we've got a copy of the current version
+            $CurrentVersionNumber = $this->CurrentVersion();
+            $CurrentVersionAddon = $this->DownloadModel->GetAddonArchive($Addon, $CurrentVersionNumber, FALSE, array('CheckOnly' => TRUE));
+            if ($CurrentVersionAddon === FALSE)
+               $this->AddLiveTask('update/download/get','current', sprintf(T("Downloading %s v%s"), $Addon, $CurrentVersionNumber));
+            
+            $LatestVersionNumber = $this->LatestVersion();
+            $LatestVersionAddon = $this->DownloadModel->GetAddonArchive($Addon, $LatestVersionNumber, FALSE, array('CheckOnly' => TRUE));
+            if ($LatestVersionAddon === FALSE)
+               $this->AddLiveTask('update/download/get','latest', sprintf(T("Downloading %s v%s"), $Addon, $LatestVersionNumber));
+
             $RenderView = 'get';
             break;
             
@@ -48,13 +58,28 @@ class DownloadController extends UpdateController {
                   exit();
                }
                
-               $Results = $this->DownloadModel->GetAddonArchive('vanilla-core', NULL, TRUE);
+               switch ($Revision) {
+                  case 'current':
+                     $DownloadVersionNumber = $this->CurrentVersion();
+                     break;
+                     
+                  default:
+                  case 'latest':
+                     $DownloadVersionNumber = $this->LatestVersion();
+                     break;
+               }
+               
+               $this->Update->Progress('download', 'get', 0, TRUE);
+               $Results = $this->DownloadModel->GetAddonArchive($Addon, $DownloadVersionNumber, TRUE, array('ProgressKey' => $Revision));
                $this->Update->SetMeta('download/message', T('Download complete'));
             }
             
             if ($RequestType == 'check') {
                $ThisAction = $this->Update->GetTask('download','get');
-               $this->SetData('Completion', GetValue('Completion',$ThisAction,NULL));
+               
+               $Completion = GetValue('Completion',$ThisAction,NULL);
+               
+               $this->SetData('Completion', $Completion);
                $this->SetData('Message', $this->Update->GetMeta('download/message'));
                $this->Update->SetMeta('backup/message');
                $this->SetData('Menu', $this->UpdateModule->ToString());

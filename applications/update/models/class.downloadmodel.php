@@ -71,6 +71,7 @@ class DownloadModel {
          'SaveFile'        => FALSE,
          'SaveVerify'      => FALSE,
          'SaveProgress'    => NULL,
+         'ProgressKey'     => NULL,
          'UseExisting'     => TRUE,
          'Timeout'         => C('Garden.SocketTimeout', 2.0),
          'BufferSize'      => 8192,
@@ -78,7 +79,8 @@ class DownloadModel {
          'Referer'         => Gdn_Url::WebRoot(TRUE),
          'Authentication'  => FALSE,
          'Username'        => NULL,
-         'Password'        => NULL
+         'Password'        => NULL,
+         'CheckOnly'       => FALSE
       );
       
       $Options = array_merge($DefaultOptions, $Options);
@@ -125,6 +127,10 @@ class DownloadModel {
       
       // If we want to save the response to a file, handle the FP and existing issues
       if ($SaveFile === TRUE) {
+         if ($Options['SaveProgress'] instanceof VanillaUpdateModel) {
+            $Options['SaveProgress']->Progress('download', 'get', 0, TRUE);
+         }
+         
          $Filename = GetValue('SaveFile', $Options);
          
          // Work out what the real filepath should be if we received a directory
@@ -157,6 +163,18 @@ class DownloadModel {
          
             // Delete the file first
             $VacantSpace = @unlink($Filename);
+         } else {
+            if (GetValue('CheckOnly', $Options, FALSE) === TRUE)
+               return array(
+                  'Headers'      => array(),
+                  'RawHeaders'   => '',
+                  'Body'         => '',
+                  'File'         => array(
+                     'Path'         => $Filename,
+                     'Size'         => -1,
+                     'Success'      => FALSE
+                  )
+               );
          }
          
          if (!$VacantSpace)
@@ -359,7 +377,7 @@ class DownloadModel {
       return $ReturnData;
    }
    
-   public function GetAddonArchive($Addon, $Version = NULL, $ForceFresh = FALSE) {
+   public function GetAddonArchive($Addon, $Version = NULL, $ForceFresh = FALSE, $Options = FALSE) {
       
       if (is_null($Version))
          $Version = 'latest';
@@ -385,10 +403,7 @@ class DownloadModel {
       
       $DisplayName = $Addon.' v'.GetValue('Version',$VersionInfo);
       
-      $Response = $this->Request(
-         $Request,
-         NULL,
-         array(
+      $RequestOptions = array(
             'SaveFile'     => $DownloadPath,
             'SaveVerify'   => $MD5,
             'SaveProgress' => $this->UpdateModel,
@@ -396,7 +411,13 @@ class DownloadModel {
             'DisplayName'  => $DisplayName,
             'UseExisting'  => !$ForceFresh,
             'SendCookies'  => FALSE
-         )
+         );
+      $RequestOptions = array_merge($RequestOptions, $Options);
+      
+      $Response = $this->Request(
+         $Request,
+         NULL,
+         $RequestOptions
       );
       
       if (!is_array($Response))
@@ -655,7 +676,7 @@ class TransferDataHandler {
          if ($this->UpdateModel instanceof VanillaUpdateModel) {
             $ProgressPercent = round(($this->Received() / $this->Size()) * 100,2);
             $LastProgress = $this->UpdateModel->Progress('download', 'get');
-            
+                        
             if (floor($ProgressPercent) > floor($LastProgress)) {
                // Speed in kilobytes per second.
                $DownloadSpeed = $this->AverageSpeed();

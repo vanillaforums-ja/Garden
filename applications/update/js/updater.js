@@ -4,6 +4,7 @@ function Gdn_Updater() {
    this.TaskQueue = false;
    this.Active = false;
    this.Libraries = ['queue'];
+   this.MonitorJobs = {};
 
    Gdn_Updater.prototype.Ready = function() {
    
@@ -32,7 +33,7 @@ function Gdn_Updater() {
       this.TaskQueue = new Gdn_Queue();
       
       try {
-         if (!this.Action.length) return;
+         if (!this.Action || !this.Action.length) return;
          var Tasks = jQuery.parseJSON(this.Action);
          
          this.BuildProgressBar();
@@ -90,6 +91,8 @@ function Gdn_Updater() {
          this.DecayTimer = setTimeout(jQuery.proxy(function(){
             this.Status.fadeOut(500);
          },this),Speed);
+      } else {
+         clearTimeout(this.DecayTimer);
       }
    }
    
@@ -98,7 +101,10 @@ function Gdn_Updater() {
       // allow this function to be called blank
       if (Percent == undefined)
          Percent = 0;
-            
+      
+      if (this.Active)
+         console.log("Progress: "+this.Active.Task+"["+this.Active.Parameters.join('/')+"] = "+Percent);
+      
       this.ProgressPercent = Percent;      
       this.Progress.html(Percent+'%');
       this.Slider.css('width',Percent+'%');
@@ -109,8 +115,9 @@ function Gdn_Updater() {
    }
 
    Gdn_Updater.prototype.PreloadQueue = function(QueueJSON) {
-      for (prop in QueueJSON)
-         this.Queue(prop,QueueJSON[prop]);
+      for (prop in QueueJSON) {
+         this.Queue(QueueJSON[prop]);
+      }
    }
    
    Gdn_Updater.prototype.GetFillerWord = function() {
@@ -149,51 +156,87 @@ function Gdn_Updater() {
       }
    }
    
-   Gdn_Updater.prototype.Queue = function(TaskURL, TaskName) {
-      this.TaskQueue.Add({
-         "Task":TaskURL,
-         "Name":TaskName
-      });
+   Gdn_Updater.prototype.Queue = function(Task) {
+      if (!Task.Parameters || Task.Parameters == null)
+         Task.Parameters = [];
+         
+      console.log("Queuing task: "+Task.Name+"("+Task.Task+")["+Task.Parameters.join('/')+"]");
+      this.TaskQueue.Add(Task);
    }
    
    Gdn_Updater.prototype.Perform = function() {
       
       // If we've got nothing in the queue, gtfo
-      if (!this.TaskQueue.Length()) return true;
+      if (!this.TaskQueue.Length()) return this.Next();
       
       // If we are not currently busy, start a task
       if (!this.Active) {
          
          this.Active = this.TaskQueue.Get();
+         this.TaskCompleted = false;
          this.Active.URL = this.Active.Task+'.json';
-         this.ProgressPercent = 0;
+         
+         this.SetProgressMode('progress');
+         this.SetProgress(0);
+         
+         console.log('Jobs Cleared');
+         this.MonitorJobs = {};
+         
+         console.log(this.MonitorJobs);
+         
+         var RequestArgs = [this.Active.Parameters.join('/'),'perform'];
          $.ajax({
-            url: gdn.url(gdn.combinePaths(this.Active.URL,'perform')),
+            url: gdn.url(gdn.combinePaths(this.Active.URL,RequestArgs.join('/'))),
             dataType: 'json',
             success: jQuery.proxy(this.TaskComplete, this)
          });
          
-         this.Monitor();
+         setTimeout(jQuery.proxy(function(){this.Monitor()},this), 500);
       }
       return false;
    }
    
-   Gdn_Updater.prototype.Monitor = function(data, status, xhr) {
+   Gdn_Updater.prototype.Monitor = function(data, status, xhr, JobID) {
+      if (this.Active == false) return;
       
-      if (data == undefined) {
-         if (this.Active == false) return;
+      if (data == undefined || data == 'undefined') {
          this.MonitorQuery();
       } else {
-      
+         
+         if (!this.MonitorJobs[JobID]) {
+            console.log("discard unknown job");
+            return;
+         }
+         
+         var RequestArgs = [this.Active.Parameters.join('/'),'check'];
+         var ActiveURL = gdn.url(gdn.combinePaths(this.Active.URL,RequestArgs.join('/')));
+         
+         var HandledURL = this.MonitorJobs[JobID];
+         if (ActiveURL != HandledURL) {
+            console.log("discard mismatch job URL");
+            return;
+         }
+         
          var CheckAgain = true;
          var Fade = true;
          
          var Completion = parseInt(data.Completion);
+         
+         if (Completion > 90) {
+            console.log('completion: '+Completion);
+            console.log('    active: '+((this.Active != false) ? 'y':'n'));
+            console.log(' completed: '+((this.TaskCompleted == true) ? 'y':'n'));
+         }
+         
          if (Completion >= 0 && Completion <= 100) {
          
             if (Completion == 100) {
                Fade = 'slow';
-               CheckAgain = false;
+               if (this.TaskCompleted) {
+                  CheckAgain = false;
+                  this.Active = false;
+                  console.log('overcheck');
+               }
             }
             
             if (data.Menu)
@@ -227,32 +270,43 @@ function Gdn_Updater() {
             this.SetStatus(data.Message, Fade);
          }
          
-         if (CheckAgain) {
-            var Exec = jQuery.proxy(function(){ this.Monitor(); }, this);
-            setTimeout(Exec, 1000);
+         if (CheckAgain)
+            this.MonitorTimer = setTimeout(jQuery.proxy(this.MonitorQuery, this), 700);
+         else
+            clearTimeout(this.MonitorTimer);
+         
+         if (Completion == 100 && this.TaskCompleted) {
+            clearTimeout(this.MonitorTimer);
+            return this.Perform();
          }
-
+         
       }
    }
    
    Gdn_Updater.prototype.MonitorQuery = function() {
       if (this.Active == false) return;
+      
+      var RequestArgs = [this.Active.Parameters.join('/'),'check'];
+      var RequestURL = gdn.url(gdn.combinePaths(this.Active.URL,RequestArgs.join('/')));
+
+      var NowDate = new Date();
+      var JobID = 'job-'+NowDate.getTime()+'-id';
+      this.MonitorJobs[JobID] = RequestURL;
+      
       $.ajax({
-         url: gdn.url(gdn.combinePaths(this.Active.URL,'check')),
+         url: RequestURL,
          dataType: 'json',
-         success: jQuery.proxy(this.Monitor, this)
+         success: jQuery.proxy(function(data, status, xhr){this.Monitor(data, status, xhr, JobID);}, this)
       });
    }
    
    Gdn_Updater.prototype.TaskComplete = function(data, status, xhr) {
-      // Final lookup to get last tick
-      this.Monitor();
       
-      this.Active = false;
-      var Finished = this.Perform();
-      if (Finished)
-         this.Next();
-
+      // Final lookup to get last tick
+      this.TaskCompleted = true;
+      console.log('Task Complete');
+      
+      this.Monitor();
    }
    
    Gdn_Updater.prototype.Next = function() {

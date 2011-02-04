@@ -75,9 +75,8 @@ class BackupController extends UpdateController {
       switch ($RequestType) {
          case 'ui':
             $this->UpdaterTitle = T('Backing up files...');
-            $this->UpdaterTasks = array(
-               'update/backup/files'   => $this->UpdaterTitle
-            );
+            $this->AddLiveTask('update/backup/files', NULL, $this->UpdaterTitle);
+            
             $RenderView = 'files';
             break;
             
@@ -114,9 +113,7 @@ class BackupController extends UpdateController {
       switch ($RequestType) {
          case 'ui':
             $this->UpdaterTitle = T('Backing up data...');
-            $this->UpdaterTasks = array(
-               'update/backup/data'   => $this->UpdaterTitle
-            );
+            $this->AddLiveTask('update/backup/data', NULL, $this->UpdaterTitle);
             $RenderView = 'data';
             break;
             

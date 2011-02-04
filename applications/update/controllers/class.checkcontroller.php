@@ -54,7 +54,7 @@ class CheckController extends UpdateController {
       
       $this->View = 'prompt';
       $this->SetData('UpdateStatus', $this->UpdateStatus);
-      $this->SetData('CurrentVersion', APPLICATION_VERSION);
+      $this->SetData('CurrentVersion', $this->CurrentVersion());
       $this->SetData('LatestVersion', $this->LatestVersion());
       
       $this->Render();

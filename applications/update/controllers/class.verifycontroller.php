@@ -28,9 +28,8 @@ class VerifyController extends UpdateController {
       switch ($RequestType) {
          case 'ui':
             $this->UpdaterTitle = T('Extracting downloaded updates...');
-            $this->UpdaterTasks = array(
-               'update/verify/extract'   => $this->UpdaterTitle
-            );
+            $this->AddLiveTask('update/verify/extract', NULL, $this->UpdaterTitle);
+
             $RenderView = 'extract';
             break;
             
@@ -98,9 +97,8 @@ class VerifyController extends UpdateController {
       switch ($RequestType) {
          case 'ui':
             $this->UpdaterTitle = T('Check for modified core files...');
-            $this->UpdaterTasks = array(
-               'update/verify/changes'   => $this->UpdaterTitle
-            );
+            $this->AddLiveTask('update/verify/changes', NULL, $this->UpdaterTitle);
+
             $RenderView = 'changes';
             break;
             

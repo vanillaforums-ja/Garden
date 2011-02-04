@@ -84,7 +84,8 @@ class UpdateController extends Gdn_Controller {
    
    protected function RequestType() {
       if (!sizeof($this->RequestArgs)) return 'ui';
-      list($Type) = $this->RequestArgs;
+      $RA = $this->RequestArgs;
+      $Type = array_pop($RA);
       $Type = strtolower($Type);
       if (in_array($Type, array('ui','perform','check'))) return $Type;
       return 'ui';
@@ -98,11 +99,26 @@ class UpdateController extends Gdn_Controller {
       return version_compare($CurrentVersion, $LatestVersion);
    }
    
+   protected function CurrentVersion() {
+      return '2.0.17.4';
+      return APPLICATION_VERSION;
+   }
+   
    protected function LatestVersion() {
       $PreferredMinimumState = C('Update.Remote.PreferredState', NULL);
       $Addon = C('Update.Remote.Addon');
       $LatestVersion = $this->Download->LatestVersion($Addon, $PreferredMinimumState);
       return $LatestVersion;
+   }
+   
+   protected function AddLiveTask($TaskURL, $TaskParameters, $TaskTitle) {
+      if (!is_null($TaskParameters) && !is_array($TaskParameters))
+         $TaskParameters = array($TaskParameters);
+      $this->UpdaterTasks[] = array(
+         'Task'         => $TaskURL,
+         'Name'         => $TaskTitle,
+         'Parameters'   => $TaskParameters
+      );
    }
       
 }
