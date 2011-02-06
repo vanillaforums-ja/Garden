@@ -192,11 +192,23 @@ class VanillaUpdateModel {
       return TRUE;
    }
    
-   public function Progress($GroupName, $TaskName, $NewProgressPercentage = NULL, $Save = FALSE) {
-      if (!is_null($NewProgressPercentage))
+   public function Progress($GroupName, $TaskName, $NewProgressPercentage = NULL, $Save = FALSE, $Tag = NULL) {
+      if (!is_null($NewProgressPercentage)) {
+         if ($Tag != NULL)
+            $NewProgressPercentage = $NewProgressPercentage.'!'.$Tag;
          $this->SetProperty($GroupName, $TaskName, 'Completion', $NewProgressPercentage, $Save);
-         
-      return $this->GetProperty($GroupName, $TaskName, 'Completion');
+      }
+      
+      $Progress = $this->GetProperty($GroupName, $TaskName, 'Completion');
+      $ProgressSplit = explode('!', $Progress);
+      $ProgressInt = array_shift($ProgressSplit);
+      $ProgressTag = sizeof($ProgressSplit) ? array_shift($ProgressSplit) : NULL;
+      if (!is_null($Tag))
+         if ($Tag != $ProgressTag) return 0;
+         return $progressInt;
+      }
+      
+      return $ProgressInt;
    }
    
    protected function Save() {
