@@ -46,43 +46,44 @@ class GettingStartedPlugin extends Gdn_Plugin {
          $Session = Gdn::Session();
          $WelcomeMessage = '<div class="GettingStarted">'
             .Anchor('×', '/dashboard/plugin/dismissgettingstarted/'.$Session->TransientKey(), 'Dismiss')
-   ."<h1>Here's how to get started:</h1>"
+   ."<h1>さあ、はじめよう:</h1>"
    .'<ul>
       <li class="One'.(C('Plugins.GettingStarted.Dashboard', '0') == '1' ? ' Done' : '').'">
-         <strong>'.Anchor('Welcome to your Dashboard', 'settings').'</strong>
-         <p>This is the administrative dashboard for your new community. Check
-         out the configuration options to the left: from here you can configure
-         how your community works. <b>Only users in the "Administrator" role can
-         see this part of your community.</b></p>
+         <strong>'.Anchor('ダッシュボードへ ようこそ', 'settings').'</strong>
+         <p>これは、コミュニティを管理・運用するためのダッシュボードです。
+         左側の設定オプションを試してみてください: ここで、このコミュニティが
+         どのように機能するかを設定できます。<b>「Administrator」ロールに属するユーザーだけが、
+         ダッシュボードにアクセスすることができます。</b></p>
       </li>
       <li class="Two'.(C('Plugins.GettingStarted.Discussions', '0') == '1' ? ' Done' : '').'">
-         <strong>'.Anchor("Where is your Community Forum?", '/').'</strong>
-         <p>Access your community forum by clicking the "Visit Site" link on the
-         top-left of this page, or by '.Anchor('clicking here', '/').'. The
-         community forum is what all of your users &amp; customers will see when
-         they visit '.Anchor(Gdn::Request()->Url('/', TRUE), Gdn::Request()->Url('/', TRUE)).'.</p>
+         <strong>'.Anchor("コミュニティ フォーラムはどこにある？", '/').'</strong>
+         <p>このページの左上にある "サイトへ移動" リンクをクリックして、
+         コミュニティ フォーラムにアクセスしてください。'.Anchor('ここをクリック', '/').
+         'してもいいです。コミュニティ フォーラムは、ユーザや顧客が '
+         .Anchor(Gdn::Request()->Url('/', TRUE), Gdn::Request()->Url('/', TRUE)).
+         ' を訪れたときに見る場所です。</p>
       </li>
       <li class="Three'.(C('Plugins.GettingStarted.Categories', '0') == '1' ? ' Done' : '').'">
          <strong>'.Anchor(T('Organize your Categories'), 'vanilla/settings/managecategories').'</strong>
-         <p>Discussion categories are used to help your users organize their
-         discussions in a way that is meaningful for your community.</p>
+         <p>スレッド カテゴリは、ユーザーがコミュニティにとって意味のある方法で
+         スレッドを分類する手助けになります。</p>
       </li>
       <li class="Four'.(C('Plugins.GettingStarted.Profile', '0') == '1' ? ' Done' : '').'">
          <strong>'.Anchor(T('Customize your Public Profile'), 'profile').'</strong>
-         <p>Everyone who signs up for your community gets a public profile page
-         where they can upload a picture of themselves, manage their profile
-         settings, and track cool things going on in the community. You should
-         '.Anchor('customize your profile now', 'profile').'.</p>
+         <p>コミュニティに参加する人には誰でも、公開プロフィール ページが用意されます。
+         そこでは、彼ら自身の画像をアップロードしたり、個人設定を管理したり、
+         コミュニティで起きている興味のある事柄をフォローすることができます。さあ
+         '.Anchor('今すぐプロフィールをカスタマイズ', 'profile').'してみましょう。</p>
       </li>
       <li class="Five'.(C('Plugins.GettingStarted.Discussion', '0') == '1' ? ' Done' : '').'">
          <strong>'.Anchor(T('Start your First Discussion'), 'post/discussion').'</strong>
-         <p>Get the ball rolling in your community by '
-         .Anchor('starting your first discussion', 'post/discussion').' now.</p>
+         <p>今すぐ'.Anchor('最初のスレッドを立てて', 'post/discussion').'、
+         コミュニティを始動させましょう。</p>
       </li>
       <li class="Six'.(C('Plugins.GettingStarted.Plugins', '0') == '1' ? ' Done' : '').'">
          <strong>'.Anchor(T('Manage your Plugins'), 'settings/plugins').'</strong>
-         <p>Change the way your community works with plugins. We\'ve bundled
-         popular plugins with the software, and there are more available online.</p>
+         <p>プラグインを使って、コミュニティの機能を拡張できます。人気のあるプラグインは、
+         すでに同梱されています。また'.Anchor('オンラインからもっと入手', 'http://vanillaforums.org/addon/browse/plugins/recent/2').'できます。</p>
       </li>
    </ul>
 </div>';
