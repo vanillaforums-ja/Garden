@@ -55,7 +55,7 @@ if ($AddonUrl != '')
          echo '<span class="Author">'.sprintf('by %s', $AuthorUrl != '' ? Anchor($Author, $AuthorUrl) : $Author).'</span>';
    
    echo '</h4>';
-   echo '<div class="Description">'.GetValue('Description', $this->Data('EnabledTheme'), '').'</div>';
+   echo '<div class="Description">'.T(GetValue('Description', $this->Data('EnabledTheme'), '')).'</div>';
 	if ($this->Data('EnabledTheme.Options')) {
       $OptionsDescription = sprintf(T('This theme has additional options.', 'This theme has additional options on the %s page.'),
          Anchor(T('Theme Options'), '/dashboard/settings/themeoptions'));
@@ -158,7 +158,7 @@ if ($AddonUrl != '')
 
                   $Description = GetValue('Description', $ThemeInfo);
                   if ($Description)
-                     echo '<em>'.$Description.'</em>';
+                     echo '<em>'.T($Description).'</em>';
                      
                   $RequiredApplications = GetValue('RequiredApplications', $ThemeInfo, FALSE);
                   if (is_array($RequiredApplications)) {
