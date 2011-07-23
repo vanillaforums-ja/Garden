@@ -6,7 +6,7 @@
 /uploads/*/
 /uploads/*.*
 /conf/config.php
-/conf/bootstrap.before.php
+# /conf/bootstrap.before.php
 /conf/bootstrap.after.php
 /conf/locale-*
 /applications/vanillaforumscom

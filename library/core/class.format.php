@@ -832,8 +832,11 @@ EOT;
          // Handle @mentions.
          if(C('Garden.Format.Mentions')) {
             $Mixed = preg_replace(
-               '/(^|[\s,\.>])@(\w{1,50})\b/i', //{3,20}
-               '\1'.Anchor('@\2', '/profile/\\2'),
+               // mod for Japanese UserName
+               // '/(^|[\s,\.>])@(\w{1,50})\b/i', //{3,20}
+               // '\1'.Anchor('@\2', '/profile/\\2'),
+               '/(^|[^一-龠ぁ-んァ-ヶ・ー＝\w\-０-９ａ-ｚＡ-Ｚ＿－])@([一-龠ぁ-んァ-ヶ・ー＝\w\-０-９ａ-ｚＡ-Ｚ＿－]{1,50})($|[^一-龠ぁ-んァ-ヶ・ー＝\w\-０-９ａ-ｚＡ-Ｚ＿－])/u',
+               '\1'.Anchor('@\2', '/profile/\\2').'\3',
                $Mixed
             );
          }
@@ -848,7 +851,9 @@ EOT;
          // Handle #hashtag searches
 			if(C('Garden.Format.Hashtags')) {
 				$Mixed = preg_replace(
-					'/(^|[\s,\.>])\#([\w\-]+)(?=[\s,\.!?]|$)/i',
+            // mod for Japanese hashtag
+            // '/(^|[\s,\.>])\#([\w\-]+)(?=[\s,\.!?]|$)/i',
+            '/(^|[^一-龠ぁ-んァ-ヶ・ー＝\w\-０-９ａ-ｚＡ-Ｚ＿－])\#([一-龠ぁ-んァ-ヶ・ー＝\w\-０-９ａ-ｚＡ-Ｚ＿－]+)(?=[^一-龠ぁ-んァ-ヶ・ー＝\w\-０-９ａ-ｚＡ-Ｚ＿－]|$)/u',
 					'\1'.Anchor('#\2', '/search?Search=%23\2&amp;Mode=like').'\3',
 					$Mixed
 				);
