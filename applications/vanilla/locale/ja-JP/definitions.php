@@ -103,7 +103,7 @@ $Definition['All Discussions'] = 'すべてのディスカッション';
 $Definition['Allow other members to see your email?'] = '他のメンバーにメールアドレスを公開する';
 $Definition['Announce'] = 'お知らせ';
 $Definition['Applicants'] = '申請者リスト';
-$Definition['Apply'] = (C('Garden.Registration.Method') === 'Approval') ? '申請' : '適用'; // このコードはテーマの「適用」ボタン(ダッシュボード)と、審査制の場合のアカウント作成フォームの「申請」ボタンの両方に使われている。日本語の場合は本来単語が異なるが、使い分けができないため、管理者しか見ないダッシュボード用の「適用」を犠牲にして、「申請」を採用するものとする。
+$Definition['Apply'] = (C('Garden.Registration.Method') === 'Approval') ? '申請' : '適用'; // このコードはテーマの「適用」ボタン(ダッシュボード)と、審査制の場合のアカウント作成フォームの「申請」ボタンの両方に使われている。日本語の場合は本来単語が異なるが、使い分けができないため、管理者しか見ないダッシュボード用の「適用」を犠牲にして、「申請」を採用するものとする。→ 2.0.18b3 でアカウント作成フォームのボタン名が'Apply for Membership'に変更されるため、'適用' で統一できる見通し。
 $Definition['Apply for Membership'] = 'アカウントを作成する';
 $Definition['Are you sure you want to do that?'] = '本当に実行してよいですか？';
 // $Definition['at'] = 'アット';  // 'at' 決め打ちで JavaScript によってメールアドレス変換されているため、意図的に翻訳しません。
@@ -155,11 +155,6 @@ $Definition['Email Unavailable'] = 'メールアドレスは登録済みです';
 $Definition['Enter the email address of the person you would like to invite:'] = '招待したい方のメールアドレスを入力してください:';
 $Definition['Enter your Email address'] = 'メールアドレスを入力';
 $Definition['Enter your existing account password.'] = '登録済みアカウントのパスワードを入力してください。';
-$Definition['ErrorBadInvitationCode'] = '無効な招待コードです。';
-$Definition['ErrorCredentials'] = '申し訳ありませんが、入力されたメールアドレス/ユーザー名とパスワードに合致するアカウントが見つかりませんでした。';
-$Definition['ErrorPermission'] = '申し訳ありませんが、権限が不足しています。';
-$Definition['ErrorRecordNotFound'] = 'リクエストされたレコードが見つかりませんでした。';
-$Definition['ErrorTermsOfService'] = '利用規約に同意する必要があります。';
 
 $Definition['Female'] = '女性';
 $Definition['Forgot?'] = '<br />パスワードを忘れた';
@@ -321,7 +316,6 @@ $Definition['Announcement'] = 'お知らせ';
 $Definition['Unannounce'] = 'お知らせ解除';
 $Definition['Welcome to Vanilla!'] = 'ようこそ Vanilla へ！';
 $Definition['Welcome Aboard!'] = 'ようこそ！';
-$Definition['[%s] Welcome Aboard!'] = '[%s] ようこそ！';
 $Definition['Save Comment'] = 'コメントを更新';
 $Definition['The name you entered is already in use by another member.'] = '入力されたユーザー名は、他のメンバーによって使用済みです。';
 $Definition['Comment by %s'] = 'コメント by %s';
@@ -330,7 +324,6 @@ $Definition['↳ No results for \'%s\''] = '↳ \'%s\' の検索結果はあり�
 $Definition['↳ Search results for \'%s\''] = '↳ \'%s\' の検索結果は以下の通りです。';
 $Definition['%s messages'] = 'メッセージ %s 件';
 $Definition['Edit Discussion'] = 'ディスカッションを編集';
-$Definition['[%s] Password Reset Request'] = '[%s] パスワード リセット依頼';
 $Definition['Don\'t Refresh'] = 'しない'; //* advanced.php
 $Definition['Every 5 seconds'] = '5 秒間隔';
 $Definition['Every 10 seconds'] = '10 秒間隔';

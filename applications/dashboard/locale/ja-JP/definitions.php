@@ -27,8 +27,10 @@ if (!function_exists('FormatPossessive')) {
    }
 }
 
-$Definition['Try Again'] = '再試行';
-
+$Definition['[%s] Confirm Your Email Address'] = '[%s] メールアドレスの確認';
+$Definition['[%s] Password Reset'] = '[%s] パスワード リセット';
+$Definition['[%s] Password Reset Request'] = '[%s] パスワード リセット依頼';
+$Definition['[%s] Welcome Aboard!'] = '[%s] ようこそ！';
 $Definition['%1$s on %2$s'] = '%1$s on %2$s';
 $Definition['%1$s Version %2$s'] = '%1$s Version %2$s';
 $Definition['%s user(s) found.'] = '%s 人のユーザーが見つかりました。';
@@ -257,22 +259,23 @@ $Definition['EmailWelcomeConnect'] = '{Title} に接続しました。あなた�
   接続プロバイダ: {ProviderName}
 
 {/,url,domain} からサイトにアクセスできます。';
-$Definition['EmailWelcomeRegister'] = '{Title} のアカウントで登録されました。あなたの情報は、次の通りです:
+$Definition['EmailWelcomeRegister'] = '{Title} のアカウントを登録しました。あなたの情報は、次の通りです:
 
   ユーザー名: {User.Name}
   メールアドレス: {User.Email}
 
 {/,url,domain} からサイトにアクセスできます。';
 
-
-
-
-
 $Definition['Enable'] = '有効化';
 $Definition['Enable Google Sign In'] = 'Google アカウントでのログインを有効化';
 $Definition['Enable OpenID'] = 'OpenID を有効化';
 $Definition['Enabled'] = '有効';
 $Definition['Enabled %1$s'] = '有効 %1$s';
+$Definition['ErrorBadInvitationCode'] = '無効な招待コードです。';
+$Definition['ErrorCredentials'] = '申し訳ありませんが、入力されたメールアドレス/ユーザー名とパスワードに合致するアカウントが見つかりませんでした。';
+$Definition['ErrorPermission'] = '申し訳ありませんが、権限が不足しています。';
+$Definition['ErrorRecordNotFound'] = 'リクエストされたレコードが見つかりませんでした。';
+$Definition['ErrorTermsOfService'] = '利用規約に同意する必要があります。';
 $Definition['Existing members send invitations to new members.'] = '既存のメンバーが新規メンバーに招待状を送ります。';
 
 $Definition['Facebook Connect allows users to sign in using their Facebook account.'] = 'Facebook Connect を使うと、Facebook アカウントでログインできます。<b>このプラグインを使うには、Facebook にアプリケーションを登録する必要があります。</b>';
@@ -453,8 +456,10 @@ $Definition['There are currently no applicants.'] = '申請者はいません。
 $Definition['This Database'] = '現在のデータベース';
 $Definition['This plugin allows users to sign in with OpenID. <b>Make sure you click Settings after enabling this plugin to enable OpenID signin</b>.'] = 'このプラグインを使うと、OpenID でログインできます。<b>このプラグインを有効にした後、OpenID を有効化する設定を、必ずクリックしてください</b>。';
 $Definition['This plugin allows users to sign in with their Google accounts. <b>Make sure you click Settings after enabling this plugin to enable Google signin</b>.'] = 'このプラグインを使うと、Googleアカウントでログインできます。<b>OpenIDプラグインが有効になっている必要があります。また、このプラグインを有効にした後、Google アカウントでのログインを有効化する設定を必ずクリックしてください</b>。';
+$Definition['To send another confirmation email click <a href="%s">here</a>.'] = '確認用メールを再送信する場合は、<a href="%s">ここ</a>をクリックしてください。';
 $Definition['Tools'] = 'ツール';
 $Definition['Transport error: %s'] = 'リクエストを処理中に致命的なエラーが発生しました。<br />サーバーは次のように応答しています: %s';
+$Definition['Try Again'] = '再試行';
 $Definition['Twitter Connect allows users to sign in using their Twitter account.'] = 'Twitter Connect を使うと、Twitter アカウントでログインできます。<b>このプラグインを使うには、Twitter にアプリケーションを登録する必要があります。</b>';
 $Definition['Twitter Settings'] = 'Twitter 設定';
 $Definition['Type'] = 'タイプ';
@@ -500,6 +505,7 @@ $Definition['You can place files in your /uploads folder.'] = 'このページ�
 $Definition['You cannot disable the %1$s plugin because the %2$s plugin requires it in order to function.'] = '%1$s プラグインを無効にできません。%2$s プラグインが動作するために、必要です。';
 //$Definition['You cannot disable the OpenID plugin because the GoogleSignIn plugin requires it in order to function.'] = 'You cannot disable the OpenID plugin because the GoogleSignIn plugin requires it in order to function.'; // 内容的に上と重複しているのでコメントアウト
 $Definition['Your changes have been saved.'] = '変更を保存しました。';
+$Definition['Your email has been successfully confirmed.'] = 'メールアドレスの確認を完了しました。';
 $Definition['Your settings have been saved.'] = '設定を保存しました。';
 $Definition['Warning: This is for advanced users.'] = '<b>警告</b>: これは上級者向けで、ウェブサーバの設定を変更する必要があります。通常は、専用サーバか VPS ホスティングを使用している場合しか使えません。内容について十分な知識があるのでない限り、試さないでください。'; // en-CA にあるので翻訳したが、2.0.18b2 の時点では使用されていない？
 $Definition['Activity.Delete'] = '×';
@@ -637,7 +643,7 @@ $Definition['Success!'] = '成功しました'; // applications/dashboard/contro
 $Definition['Failed to authenticate your password reset request. Try using the reset request form again.'] = 'パスワード リセット リクエストの認証に失敗しました。もう一度リセット リクエスト フォームから送信してください。'; // applications/dashboard/controllers/class.entrycontroller.php
 $Definition['Your new password is invalid'] = '新しいパスワードが不正です'; // applications/dashboard/controllers/class.entrycontroller.php
 $Definition['Your passwords did not match.'] = 'パスワードが一致しませんでした。'; // applications/dashboard/controllers/class.entrycontroller.php
-$Definition['Couldn\'t confirm email.'] = 'メールアドレスの確認が取れていません。あなたに送信したメールに記載されたリンクを確認するか、確認メールを送信し直してください。'; // applications/dashboard/controllers/class.entrycontroller.php
+$Definition['Couldn\'t confirm email.'] = 'メールアドレスの確認が取れていません。あなたに送信したメールに記載されたリンクを確認するか、確認用メールを送信し直してください。'; // applications/dashboard/controllers/class.entrycontroller.php
 $Definition['Use My Current Password'] = '自分の現在のパスワードを使用する'; // applications/dashboard/views/import/credentials.php & index.php
 $Definition['Importing to Vanilla'] = 'Vanilla へのデータ移行 (英語)'; // applications/dashboard/views/import/index.php
 $Definition['The Vanilla 2 Exporter'] = 'Vanilla Porter プラグイン (英語)'; // applications/dashboard/views/import/index.php
@@ -684,3 +690,6 @@ $Definition['The homepage was saved successfully.'] = 'ホーム画面が保存�
 $Definition['Forum'] = 'フォーラム'; // ダッシュボードのサイドメニュー名
 $Definition['Theme Options'] = 'テーマ オプション'; // ダッシュボードのサイドメニュー名
 $Definition['GuestModule.Message'] = '初めてですか？　参加するには、どちらかのボタンをクリックしてください！'; // applications/dashboard/modules/class.guestmodule.php
+
+$Definition['You are attempting to sign out of Vanilla. Are you sure you want to %s?'] = 'このフォーラムからログアウトしようとしています。%sしてよろしいですか？';
+$Definition['sign out'] = 'ログアウト';
